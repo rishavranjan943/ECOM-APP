@@ -1,0 +1,64 @@
+{% extends 'base.html'%}
+{%load static%}
+{%block title%} {{product.title}} {%endblock%}
+{%block css%}
+<style></style>
+{%endblock%}
+{%block body%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="{{product.image}}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    {{product.title}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="text-decoration: line-through;">
+                    Rs. {{product.price}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    Rs. {{product.discount_price}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{product.description}}
+                </div>
+            </div>
+            <form action="{% url 'shop:checkout' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="price" value=" {{product.discount_price}}">
+                <button type="submit" class="btn btn-primary">Buy Now</button>
+            </form>
+            <form action="{% url 'shop:cart' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="product_id" value="{{product.id}}" style="display: none;">
+                <button type="submit" class="btn btn-warning">Add to Cart</button>
+            </form>
+            {% if user.is_authenticated%}
+            <form action="{% url 'shop:wishlist_login' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="product_id" value="{{product.id}}" style="display: none;">
+                <button type="submit" class="btn btn-warning">Add to Wishlist</button>
+            </form>
+            {%else%}
+            <a href="" class="btn btn-warning atc mt-2" id="{{product.id}}">Add to Wishlist</a>
+            {%endif%}
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block js%}
+<script></script>
+{%endblock%}

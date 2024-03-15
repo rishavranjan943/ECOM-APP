@@ -1,0 +1,40 @@
+{% extends 'base.html'%} {%block title%} Update Profile{%endblock%} {%block css%}
+<style></style> {%endblock%} {%block body%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <div class="card-header text-white bg-info">
+                    <div class="card-title">Profile</div>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="email" name="email" value="{{user.email}}"  />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="text" name="first_name" id="" value="{{user.first_name}}"  />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="text" name="last_name" id="" value="{{user.last_name}}"  />
+                        </div>
+                        <br />
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <br><br>
+                        <a href="{% url 'users:forgot_password' %}" class="btn btn-primary">Forgot Password</a>
+                        <br><br>
+                        <a href="{% url 'users:delete_user' %}" class="btn btn-primary">Delete Account</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%} {%block js%}
+<script></script>
+{%endblock%}

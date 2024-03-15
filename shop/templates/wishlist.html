@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Wishlist {% endblock %}
+
+{% block css %}
+<style>
+    /* Add your custom CSS styles here */
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 style="text-align: center;">Wishlist</h1>
+    {% if wishlist%}
+    {%for product in wishlist%}
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="{{product.image}}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    {{product.title}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="text-decoration: line-through;">
+                    Rs. {{product.price}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    Rs. {{product.discount_price}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{product.description}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="{% url 'shop:cart' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="product_id" value="{{product.id}}" style="display: none;">
+                        <button type="submit" class="btn btn-warning">Add to Cart</button>
+                    </form>
+                    <a href="{% url 'shop:detail' id=product.id %}" class="btn btn-warning">Detail</a>
+                    <a href="" class="btn rtc btn-warning" id="{{product.id}}">Remove form wishlist</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {%endfor%}
+    {%else%}
+    <h3 style="text-align: center;">No product in wishlist</h3>
+    {%endif%}
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Event listener for when the link is clicked
+        $('.rtc').click(function () {
+            var itemId = $(this).attr('id'); // Get the id of the clicked link
+            console.log(itemId)
+            var wishlist = JSON.parse(localStorage.getItem('wishlist')) || {}; // Retrieve the wishlist from local storage
+            console.log(wishlist)
+            // Remove the item from the wishlist
+            if (wishlist[itemId] === 1) {
+                delete wishlist[itemId];
+                localStorage.setItem('wishlist', JSON.stringify(wishlist)); // Save the updated wishlist to local storage
+                console.log("Item removed from wishlist");
+
+                $(this).remove(); // Remove the link from the UI
+                window.location.href = "/";
+            } else {
+                console.log("Item not found in wishlist");
+            }
+
+            return false; // Prevent the default behavior of the link
+        });
+    });
+</script>
+{% endblock %}

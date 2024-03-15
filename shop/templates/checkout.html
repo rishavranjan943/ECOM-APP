@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Cart {% endblock %}
+
+{% block css %}
+<style>
+    /* Add your custom CSS styles here */
+</style>
+{%endblock%}
+{%block body%}
+    <h3>The total payable amout is {{price}}</h3>
+    <br><br>
+    <h5>Address : </h5>
+    <form method="post" action="{% url 'shop:user_address' %}">
+        {% csrf_token %}
+        <div>
+            <label for="id_address">Address:</label>
+            <input id="id_address" name="loc" value="{{address.address}}"></input>
+        </div>
+        <div>
+            <label for="id_city">City:</label>
+            <input type="text" id="id_city" name="city" value="{{address.city}}">
+        </div>
+        <div>
+            <label for="id_state">State:</label>
+            <input type="text" id="id_state" name="state" value="{{address.state}}">
+        </div>
+        <div>
+            <label for="id_zipcode">Zipcode:</label>
+            <input type="text" id="id_zipcode" name="zipcode" value="{{address.zipcode}}">
+        </div>
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </form>
+
+{%endblock%}
+
+{%block js%}
+{%endblock%}

@@ -1,0 +1,51 @@
+{% extends 'base.html'%}
+{%block title%} ADD PRODUCT {%endblock%}
+{%block css%} <style></style> {%endblock%}
+{%block body%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <div class="card-header text-white bg-info">
+                    <div class="card-title">Add Product</div>
+                </div>
+                <div class="card-body">
+                    <form  method="post" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <div class="form-group">
+                            <input type="text" name="title" id="" placeholder="Enter title" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <input type="number" name="price" id="" placeholder="Enter price" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <input type="number" name="dis-price" id="" placeholder="Enter discount price" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <input type="text" name="category" id="" placeholder="Enter category" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <input type="text" name="description" id="" placeholder="Enter description" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <input type="text" name="image" id="" placeholder="Enter image url " required>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-info">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
+
+{%block js%}
+<script></script> {%endblock%}

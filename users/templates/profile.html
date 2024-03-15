@@ -1,0 +1,36 @@
+{% extends 'base.html'%} {%block title%} PROFILE{%endblock%} {%block css%}
+<style></style> {%endblock%} {%block body%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <div class="card-header text-white bg-info">
+                    <div class="card-title">Profile</div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="email" name="email" value="{{user.email}}" readonly/>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="text" name="first_name" id="" value="{{user.first_name}}" readonly/>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="text" name="last_name" id="" value="{{user.last_name}}" readonly/>
+                        </div>
+                        <br />
+                        <a href="{% url 'users:update_profile' %}" class="btn btn-primary">Update Profile</a>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%} {%block js%}
+<script></script>
+{%endblock%}

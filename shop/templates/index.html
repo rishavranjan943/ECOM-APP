@@ -1,0 +1,84 @@
+{% extends 'base.html'%}
+{%load static%}
+{%block title%} E SHOP {%endblock%}
+{%block css%} 
+    <link rel="stylesheet" href="{%static 'style.css'%}">
+<style></style> {%endblock%}
+{%block body%}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-sm">
+                    <form class="card-body row no-gutters align-items-center">
+                        <div class="col">
+                            <input type="search" name="item_name" id="" placeholder="Search for products"
+                                class="form-control form-control-borderless">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit" name="search">Search</button>
+                        </div>
+                        <div class="col-auto">
+                            <select name="sort_by" class="form-control">
+                                <option value="">Sort By</option>
+                                <option value="price_high_to_low">Price: High to Low</option>
+                                <option value="price_low_to_high">Price: Low to High</option>
+                                <option value="new">Newest First</option>
+                                <option value="old">Oldest First</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row m-4">
+            {%for product in products %}
+            <div class="col-md-3">
+                <div class="card m-2">
+                    <img src="{{ product.image }}" alt="{{ product.title }}" class="card-img-top">
+                    <div class="card-body">
+                        <div class="card-title">{{product.title}}</div>
+                        <div class="card-text" style="text-decoration: line-through;">Rs. {{product.price}}</div>
+                        <div class="card-text">Rs. {{product.discount_price}}</div>
+                        <a href="{% url 'shop:detail' id=product.id %}" class="btn btn-warning">Detail</a>
+                        <form action="{% url 'shop:cart' %}" method="post">
+                            {% csrf_token %}
+                            <input type="text" name="product_id" value="{{product.id}}" style="display: none;">
+                            <button type="submit" class="btn btn-warning">Add to Cart</button>
+                        </form>
+                        {% if user.is_authenticated%}
+                        <form action="{% url 'shop:wishlist_login' %}" method="post">
+                            {% csrf_token %}
+                            <input type="text" name="product_id" value="{{product.id}}" style="display: none;">
+                            <button type="submit" class="btn btn-warning">Add to Wishlist</button>
+                        </form>
+                        {%else%}
+                        <a href="" class="btn btn-warning atc mt-2" id="{{product.id}}">Add to Wishlist</a>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        <div class="row">
+            <div class="col-md-3 offset-md-4">
+                <ul class="pagination">
+                    {% if products.has_previous %}
+                        <li class="page-item"><a href="?page={{products.previous_page_number}}" class="page-link">Prev</a></li>
+
+                    {%endif%}
+                    <li class="page-item active">
+                        <a href="?page={{products.number}}" class="page-link">Current</a>
+                    </li>
+                    {%if products.has_next%}
+                        <li class="page-item"><a href="?page={{products.next_page_number}}" class="page-link">       Next</a></li>
+                    {%endif%}
+                </ul>
+            </div>
+        </div>
+    </div>
+{%endblock%}
+
+{%block js%}
+<script></script>
+{%endblock%}
